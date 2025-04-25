@@ -1,4 +1,4 @@
-import { createIncidentService, getAllIncidentsService } from "../services/incidentsService.js"
+import { createIncidentService, deleteIncidentByIdService, getAllIncidentsService, getIncidentByIdService } from "../services/incidentsService.js"
 
 export const getAllIncidents = async(req,res)=>{
     try{
@@ -14,6 +14,7 @@ export const getAllIncidents = async(req,res)=>{
         res.status(500).json({
             success : false,
             message : "internal Server Error",
+            error : error,
         })
     }
 }
@@ -33,7 +34,59 @@ export const createIncident = async(req, res)=>{
         res.status(500).json({
             success : false,
             message : "Unable to create Incident, internal Server error",
+            errror : error,
         })
     }
 };
+
+export const getIncidentById = async(req, res)=>{
+    try{
+        
+        const response = await getIncidentByIdService(req.params.id);
+        if(response == null){
+            return res.status(404).json({
+                success : false,
+                message : "Data not found",
+            });
+        }
+        return res.status(200).json({
+            success : true,
+            message : "Fetched successfully",
+            data : response,
+        })
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success : false,
+            message : "Invalid Id",
+            error : error
+        })
+    }
+};
+
+export const deleteIncidentById = async(req, res)=>{
+    try{
+        const response = await deleteIncidentByIdService(req.params.id);
+        if(response == null){
+            return res.status(404).json({
+                success : false,
+                message : "Incident not found"
+            })
+        }
+        res.status(200).json({
+            success : true,
+            message : "Incident deleted successfully.",
+            deletedIncident : response,
+        });
+    }
+    catch(error){
+        return res.status(500).json({
+            success : false,
+            message : "internal Sever error",
+            error : error,
+        })
+    }
+};
+
 
