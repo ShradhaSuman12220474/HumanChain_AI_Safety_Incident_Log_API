@@ -11,7 +11,7 @@ export const validate = (schema)=>{
             return res.status(400).json({
                 success : false,
                 message : error.errors[0].message,
-                expected : error.errors[0].expected,
+                expected : error.errors[0].options,
             })
             
 
