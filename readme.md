@@ -39,7 +39,7 @@ git clone https://github.com/ShradhaSuman12220474/HumanChain_AI_Safety_Incident_
 
 cd HumanChain_AI_Safety_Incident_Log_API
 ```
-2. Install Dependencies
+2. Install Dependencies.
 ```
 npm install
 ```
